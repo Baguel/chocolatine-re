@@ -21,8 +21,6 @@ jobs:
    - name: make_test
      uses: actions/checkout@v3
    - run: make 
-   - name: check_executable
-     uses: actions/checkout@v3
    - run: |
       if [[ -e $Bin ]] && [[ -x $Bin ]]
            then
