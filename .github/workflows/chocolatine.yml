@@ -1,0 +1,23 @@
+name: chocolatine
+
+on:
+ push:
+  branches-ignore: 
+    - 'ga-ignore-*'
+ 
+ pull_request: 
+  branches-ignore:
+   - 'ga-ignore-*'
+   
+jobs:
+  check_program_compilation:
+   runs-on: ubuntu-latest
+   ##container: epitechcontent/epitest-docker
+   steps:
+   - name: make_test
+     uses: action/checkout@v3
+   - name: make_clean_test
+     uses: action/checkout@v3
+   - run: make clean
+    
+    
