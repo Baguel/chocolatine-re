@@ -15,9 +15,9 @@ jobs:
    ##container: epitechcontent/epitest-docker
    steps:
    - name: make_test
-     uses: action/checkout@v3
+     uses: actions/checkout@v3
    - name: make_clean_test
-     uses: action/checkout@v3
+     uses: actions/checkout@v3
    - run: make clean
     
     
