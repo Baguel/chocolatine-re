@@ -23,8 +23,8 @@ jobs:
       - run : |
           check.sh $(pwd) $(pwd)
           if [ -s $coding-style-reports.log ]
+          i=1
           then
-            i=1
             while read -r line
             do                                                                                                                                                                       
               tab=( ${line//:/ } )
@@ -33,6 +33,7 @@ jobs:
               echo "::error file=${str[1]},line=${tab[3]},title=${tab[2]} coding style error::${tab[3]}"
               ((i++))
             done < "coding-style-reports.log"
+            exit 2
           fi
 
   check_program_compilation:
