@@ -16,6 +16,7 @@ jobs:
    steps:
    - name: make_test
      uses: actions/checkout@v3
+   - run: make 
    - name: make_clean_test
      uses: actions/checkout@v3
    - run: make clean
