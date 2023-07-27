@@ -10,7 +10,7 @@ on:
    - 'ga-ignore-*'
    
 env:
- EXECUTABLES: 101pong
+ Bin: 101pong
    
 jobs:
   check_program_compilation:
@@ -24,7 +24,7 @@ jobs:
    - name: check_executable
      uses: actions/checkout@v3
    - run: |
-      if [[ -e $EXECUTABLES ]] && [[ -x $EXECUTABLES ]]
+      if [[ -e $Bin ]] && [[ -x $Bin ]]
            then
              exit 0
            else
