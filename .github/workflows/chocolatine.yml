@@ -9,14 +9,27 @@ on:
   branches-ignore:
    - 'ga-ignore-*'
    
+env:
+ EXECUTABLES: 101pong
+   
 jobs:
   check_program_compilation:
    runs-on: ubuntu-latest
-   ##container: epitechcontent/epitest-docker
+   container: epitechcontent/epitest-docker
+   timeout-minutes: 2
    steps:
    - name: make_test
      uses: actions/checkout@v3
    - run: make 
+   - name: check_executable
+     uses: actions/checkout@v3
+   - run: |
+      if [[ -e $EXECUTABLES ]] && [[ -x $EXECUTABLES ]]
+           then
+             exit 0
+           else
+               exit 1
+           fi
    - name: make_clean_test
      uses: actions/checkout@v3
    - run: make clean
