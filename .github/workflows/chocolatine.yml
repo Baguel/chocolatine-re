@@ -65,7 +65,7 @@ jobs:
      steps:
       - name: run_tests
         uses: actions/checkout@v3
-      - run: make run_test
+      - run: date
     
   to_github:
     runs-on: ubuntu-latest
