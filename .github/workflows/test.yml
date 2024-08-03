@@ -2,7 +2,7 @@ name: This is a chocolatine !!! Miam !!!
 on:
     [push, pull_request]
 env:
-    MIRROR_URL: "git@github.com:Baguel/Portfolio1.git"
+    MIRROR_URL: "git@github.com:Baguel/chocolatine.git"
     EXECUTABLES: "mysh"
 jobs:
     check_coding_style:
@@ -40,4 +40,4 @@ jobs:
             - uses: pixta-dev/repository-mirroring-action@v1
               with:
                 target_repo_url: ${{ env.MIRROR_URL }}
-                ssh_private_key: ${{ secrets.GIT_SSH_PRIVATE_KEY }}
+                ssh_private_key: ${{ secrets.GIT_KEY }}
