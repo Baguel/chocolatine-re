@@ -30,7 +30,6 @@ jobs:
             - uses: actions/checkout@v4
             - run: make tests_run
     push_to_mirror:
-        #needs: job3
         runs-on: ubuntu-latest
         if: ${{ github.event_name == 'push' }}
         steps:
