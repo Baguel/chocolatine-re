@@ -1,0 +1,42 @@
+name: This is a chocolatine !!! Miam !!!
+on:
+    [push, pull_request]
+env:
+    MIRROR_URL: "git@github.com:EpitechPromo2028/B-PSU-200-COT-2-2-minishell2-jessica.moussougan.git"
+    EXECUTABLES: "mysh"
+jobs:
+    check_coding_style:
+        name: job1
+        runs-on: ubuntu-latest
+        container: ghcr.io/epitech/coding-style-checker:latest
+        steps:
+            - uses: actions/checkout@v4
+            - run : check.sh $(pwd) $(pwd)
+    check_program_compilation:
+        name: job2
+        #needs: job1
+        runs-on: ubuntu-latest
+        container: epitechcontent/epitest-docker
+        steps:
+            - uses: actions/checkout@v4
+            - run: make
+            - run: make clean
+    run_tests:
+        name: job3
+        #needs: job2
+        runs-on: ubuntu-latest
+        container: epitechcontent/epitest-docker
+        steps:
+            - uses: actions/checkout@v4
+            - run: make tests_run
+    push_to_mirror:
+        name: job4
+        #needs: job3
+        if: github.event_name == "push"
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses:  pixta-dev/repository-mirroring-action
+            with:
+                target_repo_url: git@github.com:EpitechPromo2028/B-PSU-200-COT-2-2-minishell2-jessica.moussougan.git"
+                GIT_SSH_PRIVATE_KEY: ${{ secrets.GIT_SSH_PRIVATE_KEY}}
