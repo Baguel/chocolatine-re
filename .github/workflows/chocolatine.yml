@@ -10,7 +10,7 @@ on:
    - 'ga-ignore-*'
    
 env:
- MIRROR_URL: git@github.com:Baguel/test.git
+ MIRROR_URL: git@github.com:Baguel/chocolatine.git
  Bin: 101pong
    
 jobs:
