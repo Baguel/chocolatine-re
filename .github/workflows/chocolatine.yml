@@ -20,7 +20,7 @@ jobs:
       image: ghcr.io/epitech/coding-style-checker:latest
     steps:
       - name: check_coding_style
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - run : |
           check.sh $(pwd) $(pwd)
           if [ -s $coding-style-reports.log ]
@@ -45,7 +45,7 @@ jobs:
    timeout-minutes: 2
    steps:
    - name: make_test
-     uses: actions/checkout@v3
+     uses: actions/checkout@v4
    - run: make 
    - run: |
       if [[ -e $Bin ]] && [[ -x $Bin ]]
@@ -64,14 +64,14 @@ jobs:
      container: epitechcontent/epitest-docker
      steps:
       - name: run_tests
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - run: date
     
   to_github:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'push' }}
     steps:
-        - uses: actions/checkout@v3
+        - uses: actions/checkout@v4
           with:
             fetch-depth: 0
         - uses: pixta-dev/repository-mirroring-action@v1
