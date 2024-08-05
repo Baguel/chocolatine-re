@@ -13,9 +13,11 @@ jobs:
             - uses: actions/checkout@v4
             - run : |
                 check.sh $(pwd) $(pwd)
-                if [ -s $coding-style-reports.log ]
-                then
+                if [ -s $coding-style-reports.log ]; then
                     cat coding-style-reports.log
+                else
+                    echo "Le fichier coding-style-reports.log est vide ou n'existe pas."
+                fi
           
     check_program_compilation:
         name: job2
