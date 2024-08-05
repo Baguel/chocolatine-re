@@ -11,7 +11,10 @@ jobs:
         container: ghcr.io/epitech/coding-style-checker:latest
         steps:
             - uses: actions/checkout@v4
-            - run : check.sh $(pwd) $(pwd)
+            - run: |
+                check.sh $(pwd) $(pwd)
+                if [ -s $coding-style-reports.log ]; then 
+                cat coding-style-reports.log;
     check_program_compilation:
         name: job2
         runs-on: ubuntu-latest
