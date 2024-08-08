@@ -27,7 +27,7 @@ jobs:
             - uses: actions/checkout@v4
             - run: make
             - run: |
-                if [[ -e $EXECUTABLES ]] && [[ -x $EXECUTABLES ]] 
+                if [ -e $EXECUTABLES ] && [ -x $EXECUTABLES ]
                     then
                         echo "Yes binary exists and it's executable"
                 else
