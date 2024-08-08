@@ -26,7 +26,13 @@ jobs:
         steps:
             - uses: actions/checkout@v4
             - run: make
-            - run: make clean
+            - run: |
+                if [[ -e $EXECUTABLES ]] && [[ -x $EXECUTABLES ]]
+                   then
+                     exit 0
+                   else
+                     exit 1
+                fi
     run_tests:
         name: job3
         #needs: job2
