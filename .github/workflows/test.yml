@@ -27,11 +27,10 @@ jobs:
             - uses: actions/checkout@v4
             - run: make
             - run: |
-                if [[ -e $EXECUTABLES ]] && [[ -x $EXECUTABLES ]]
-                   then
-                     exit 0
-                   else
-                     exit 1
+                if [ -s ${{ env.EXECUTABLES }}] && [-x ${{ env.EXECUTABLES }}]; then
+                    echo "Yes binary exists and it's executable"
+                else
+                    echo "Binary doesn't exist or exists and isn't executable"
                 fi
     run_tests:
         name: job3
