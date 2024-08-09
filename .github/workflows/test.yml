@@ -16,7 +16,7 @@ jobs:
                 while read -r LINE
                 do
                   tab=(${LINE//:/})
-                  echo "::error file=${tab[0]},line=${tab[2]},title=${tab[1]} coding style error::${tab[2]}"
+                  echo "::error file=${tab[0]} coding style error::${tab[2]}"
                 done < coding-style-reports.log
                 fi
                 
