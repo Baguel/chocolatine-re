@@ -24,6 +24,7 @@ jobs:
       - run : |
           check.sh $(pwd) $(pwd)
           if [ -s $coding-style-reports.log ]
+          cat coding-style-reports.log
           i=1
           then
             while read -r line
