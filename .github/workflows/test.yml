@@ -1,55 +1,90 @@
-name: This is a chocolatine !!! Miam !!!
+name: chocolatine
+
 on:
-    [push, pull_request]
+  push:
+    branches-ignore:
+      - 'ga-ignore-*'
+  pull_request:
+    branches-ignore:
+      - 'ga-ignore-*'
+
 env:
-    MIRROR_URL: "git@github.com:Baguel/chocolatine.git"
-    EXECUTABLES: "101pong"
+  EXECUTABLES: "107transfer"
+  MIRROR_URL: git@github.com:EpitechPromo2028/B-DOP-200-COT-2-2-chocolatine-berenger.sessou.git
+
 jobs:
     check_coding_style:
-        runs-on: ubuntu-latest
-        container: ghcr.io/epitech/coding-style-checker:latest
-        steps:
-            - uses: actions/checkout@v4
-            - run : |
-                check.sh $(pwd) $(pwd)
-                if [ -s coding-style-reports.log ]; then
-                while read -r LINE
-                do
-                  tab=(${LINE//:/})
-                  echo "::error file=${tab[0]} coding style error::${tab[2]}"
-                done < coding-style-reports.log
-                fi
-                
+      runs-on: ubuntu-latest
+      container:
+        image: ghcr.io/epitech/coding-style-checker:latest
+      steps:
+        - name: check
+          uses: actions/checkout@v4
+
+        - name: coding_style checking
+          run: |
+            check.sh $(pwd) $(pwd)
+            if [ -s $coding-style-reports.log ]
+              cat coding-style-reports.log
+              then
+                while read -r line
+                do                                                                                                                                                                       
+                  tab=( ${line//:/ } )
+                  yo=(${tab[0]})
+                  str=( ${yo//// } )
+                  echo "::error file=${str[1]},line=${tab[3]},title=${tab[2]} coding style error::${tab[3]}"
+                done < "coding-style-reports.log"
+                exit 2
+              else
+                exit 0
+              fi
+
     check_program_compilation:
-        name: job2
-        runs-on: ubuntu-latest
-        container: epitechcontent/epitest-docker
-        steps:
-            - uses: actions/checkout@v4
-            - run: make
-            - run: |
-                if [ -e $EXECUTABLES ] && [ -x $EXECUTABLES ]
-                    then
-                        echo "Yes binary exists and it's executable"
-                else
-                    echo "Binary doesn't exist or exists and isn't executable"
-                fi
+      needs: check_coding_style
+      runs-on: ubuntu-latest
+      container:
+        image: epitechcontent/epitest-docker:latest
+      steps:
+        - name: check
+          uses: actions/checkout@v4
+
+        - name: make step and binary verif
+          run: |
+            make
+            if [[ ! -s $EXECUTABLES ]] && [[ ! -x $EXECUTABLES ]] then
+                exit 1
+            fi
+
+        - name: make clean step
+          run: make clean
+      timeout-minutes: 2
+
     run_tests:
-        name: job3
-        #needs: job2
-        runs-on: ubuntu-latest
-        container: epitechcontent/epitest-docker
-        steps:
-            - uses: actions/checkout@v4
-            - run: make tests_run
+      needs: check_program_compilation
+      runs-on: ubuntu-latest
+      container:
+        image: epitechcontent/epitest-docker:latest
+      steps:
+        - name: check
+          uses: actions/checkout@v4
+        - name: check
+          run: make tests_run
+      timeout-minutes: 2
+
     push_to_mirror:
-        runs-on: ubuntu-latest
-        if: ${{ github.event_name == 'push' }}
-        steps:
-            - uses: actions/checkout@v4
-              with:
-                fetch-depth: 0
-            - uses: pixta-dev/repository-mirroring-action@v1
-              with:
-                target_repo_url: ${{ env.MIRROR_URL }}
-                ssh_private_key: ${{ secrets.GIT_KEY }}
+      needs: run_tests
+      runs-on: ubuntu-latest
+      if: ${{ github.event_name == 'push' }}
+      steps:
+        - name: check
+          uses: actions/checkout@v4
+          with:
+            fetch-depth: 0
+        - name: mirroring
+          uses: pixta-dev/repository-mirroring-action@v1
+          with:
+            target_repo_url:
+              ${{ env.MIRROR_URL }}
+            ssh_private_key:
+              ${{ secrets.GIT_SSH_PRIVATE_KEY}}
+  
