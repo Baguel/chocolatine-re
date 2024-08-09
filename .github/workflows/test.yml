@@ -12,7 +12,8 @@ jobs:
             - uses: actions/checkout@v4
             - run : |
                 check.sh $(pwd) $(pwd)
-                if [ -f $coding-style-reports.log ]; then
+                if [ -e $coding-style-reports.log ] 
+                then
                     ls
                     cat coding-style-reports.log
                 else
