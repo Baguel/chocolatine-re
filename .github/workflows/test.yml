@@ -6,17 +6,17 @@ env:
     EXECUTABLES: "101pong"
 jobs:
     check_coding_style:
-        name: job1
         runs-on: ubuntu-latest
         container: ghcr.io/epitech/coding-style-checker:latest
         steps:
             - uses: actions/checkout@v4
             - run : |
                 check.sh $(pwd) $(pwd)
-                if [ -s $coding-style-reports.log ]; then
+                if [ -f $coding-style-reports.log ]; then
+                    ls
                     cat coding-style-reports.log
                 else
-                    echo "Le fichier coding-style-reports.log est vide ou n'existe pas."
+                    ls
                 fi
           
     check_program_compilation:
