@@ -21,7 +21,7 @@ jobs:
         - name: check
           uses: actions/checkout@v4
 
-        - name: coding_style checking
+        - name: coding_style checking_from_github
           run: |
             check.sh $(pwd) $(pwd)
             if [ -s $coding-style-reports.log ]
